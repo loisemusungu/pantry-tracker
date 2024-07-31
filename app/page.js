@@ -1,34 +1,26 @@
-"use client";
+"use client"
 
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { firestore } from "@/firebase";
-import { collection } from "@firebase/firestore";
+import { collection, getDocs, query } from "@firebase/firestore";
 
-const item = [
-  "tomato",
-  "potato",
-  "onion",
-  "garlic",
-  "ginger",
-  "carrot",
-  "lettuce",
-  "cucumber",
-  "cabbage",
-  "bell pepper",
-];
 
 export default function Home() {
+  const [pantryTracker, setPantryTracker] = useState([])
   useEffect(() => {
     const updatePantryTracker = async () => {
-      const snapshot = query(collection(firestore, "pantryTracker"));
-      const docs = await getDocs(snapshot);
+      const snapshot = query(collection(firestore, "pantryTracker"))
+      const docs = await getDocs(snapshot)
+      const pantryTrackerList = []
       docs.forEach((doc) => {
-        console.log(doc.id, doc.data());
-      });
-    };
-    updatePantryTracker();
-  }, []);
+        pantryTrackerList.push(doc.id)
+      })
+      console.log(pantryTrackerList)
+      setPantryTracker(pantryTrackerList)
+    }
+    updatePantryTracker()
+  }, [])
   return (
     <Box
       width="100vw"
@@ -52,7 +44,7 @@ export default function Home() {
           </Typography>
         </Box>
         <Stack width="800px" height="300px" spacing={2} overflow={"auto"}>
-          {item.map((i) => (
+          {pantryTracker.map((i) => (
             <Box
               key={i}
               width="100%"
@@ -73,5 +65,5 @@ export default function Home() {
         </Stack>
       </Box>
     </Box>
-  );
+  )
 }
