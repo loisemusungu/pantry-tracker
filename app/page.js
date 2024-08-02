@@ -42,6 +42,11 @@ export default function Home() {
     }
     updatePantryTracker()
   }, [])
+
+  const addItem = (item) => {
+    console.log(item)
+  }
+
   return (
     <Box
       width="100vw"
@@ -63,8 +68,22 @@ export default function Home() {
             Add Item
           </Typography>
           <Stack width="100%" direction={"row"} spacing={2}>
-            <TextField id="outlined-basic" label="Item" variant="outlined" fullWidth/>
-            <Button variant="outlined">Add</Button>
+            <TextField 
+            id="outlined-basic" 
+            label="Item" 
+            variant="outlined" 
+            fullWidth 
+            value={itemName}
+            onChange={(e) => setItemName(e.target.value)}
+            />
+            <Button 
+            variant="outlined"
+            onClick={() => {
+              addItem(itemName)
+              handleClose()
+            }}
+            >
+              Add</Button>
           </Stack>
         </Box>
       </Modal>
