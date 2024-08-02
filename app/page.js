@@ -48,13 +48,14 @@ export default function Home() {
   const addItem = async (item) => {
     const docRef = doc(collection(firestore, 'pantryTracker'), item)
     await setDoc(docRef, {})
-    updatePantryTracker()
+    await updatePantryTracker()
   }
 
   const removeItem = async (item) => {
     const docRef = doc(collection(firestore, 'pantryTracker'), item)
-    deleteDoc(docRef)
-    updatePantryTracker()
+    await deleteDoc(docRef)
+    await updatePantryTracker()
+    
   }
 
   return (
