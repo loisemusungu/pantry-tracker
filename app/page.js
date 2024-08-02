@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box, Stack, Typography, Button, Modal, TextField } from "@mui/material";
 import { firestore } from "@/firebase";
-import { collection, getDocs, query } from "@firebase/firestore";
+import { collection, getDocs, query, doc, setDoc } from "@firebase/firestore";
 
 const style = {
   position: 'absolute',
@@ -46,7 +46,14 @@ export default function Home() {
   }, [])
 
   const addItem = async (item) => {
-    await firestore.collection('pantryTracker').doc(item).set({})
+    const docRef = doc(collection(firestore, 'pantryTracker'), item)
+    await setDoc(docRef, {})
+    updatePantryTracker()
+  }
+
+  const removeItem = async (item) => {
+    const docRef = doc(collection(firestore, 'pantryTracker'), item)
+    await docRef.delete()
     updatePantryTracker()
   }
 
