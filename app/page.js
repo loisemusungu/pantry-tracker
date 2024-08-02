@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box, Stack, Typography, Button, Modal, TextField } from "@mui/material";
 import { firestore } from "@/firebase";
-import { collection, getDocs, query, doc, setDoc } from "@firebase/firestore";
+import { collection, getDocs, query, doc, setDoc, deleteDoc } from "@firebase/firestore";
 
 const style = {
   position: 'absolute',
@@ -53,7 +53,7 @@ export default function Home() {
 
   const removeItem = async (item) => {
     const docRef = doc(collection(firestore, 'pantryTracker'), item)
-    await docRef.delete()
+    deleteDoc(docRef)
     updatePantryTracker()
   }
 
@@ -114,30 +114,38 @@ export default function Home() {
             Pantry Items
           </Typography>
         </Box>
-        <Stack width="800px" height="300px" spacing={2} overflow={"auto"}>
+        <Stack 
+        width="800px" 
+        height="300px" 
+        spacing={2} 
+        overflow={"auto"}>
           {pantryTracker.map((i) => (
-            <Stack key={i} direction={'row'} spacing={2} justifyContent={'center'} alignContent={'space-between'}>
-              <Box
-                key={i}
-                width="100%"
-                minHeight="150px"
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                bgcolor={"#f0f0f0"}
-              >
-                <Typography variant={"h3"} color={"#333"} textAlign={"center"}>
-                  {
-                    // capitalize first letter of the item
-                    i.charAt(0).toUpperCase() + i.slice(1)
-                  }
-                </Typography>
-              </Box>
-              <Button variant="contained" onClick={() =>removeItem(i)}
-              >
-              Remove</Button>
-            </Stack>
-          ))}
+            <Box
+              key={i}
+              width="100%"
+              minHeight="150px"
+              display={"flex"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              bgcolor={"#f0f0f0"}
+              paddingX={5}
+            >
+              <Typography 
+              variant={"h3"} 
+              color={"#333"} 
+              textAlign={"center"}>
+                {
+                  // capitalize first letter of the item
+                  i.charAt(0).toUpperCase() + i.slice(1)
+                }
+              </Typography>
+              <Button 
+                variant="contained" 
+                onClick={() =>removeItem(i)}>
+                Remove
+              </Button>
+            </Box>
+        ))}
         </Stack>
       </Box>
     </Box>
