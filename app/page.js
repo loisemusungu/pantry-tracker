@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { Box, Stack, Typography, Button, Modal } from "@mui/material";
+import { Box, Stack, Typography, Button, Modal, TextField } from "@mui/material";
 import { firestore } from "@/firebase";
 import { collection, getDocs, query } from "@firebase/firestore";
 
@@ -15,6 +15,9 @@ const style = {
   border: '2px solid #333',
   boxShadow: 24,
   p: 4,
+  gap: 3,
+  display: 'box',
+  flexDirection: 'column'
 }
 
 export default function Home() {
@@ -23,6 +26,8 @@ export default function Home() {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const [itemName, setItemName] = useState('')
 
   useEffect(() => {
     const updatePantryTracker = async () => {
@@ -55,11 +60,12 @@ export default function Home() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Add Item
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Stack width="100%" direction={"row"} spacing={2}>
+            <TextField id="outlined-basic" label="Item" variant="outlined" fullWidth/>
+            <Button variant="outlined">Add</Button>
+          </Stack>
         </Box>
       </Modal>
 
