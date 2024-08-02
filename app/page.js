@@ -116,22 +116,27 @@ export default function Home() {
         </Box>
         <Stack width="800px" height="300px" spacing={2} overflow={"auto"}>
           {pantryTracker.map((i) => (
-            <Box
-              key={i}
-              width="100%"
-              minHeight="150px"
-              display={"flex"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              bgcolor={"#f0f0f0"}
-            >
-              <Typography variant={"h3"} color={"#333"} textAlign={"center"}>
-                {
-                  // capitalize first letter of the item
-                  i.charAt(0).toUpperCase() + i.slice(1)
-                }
-              </Typography>
-            </Box>
+            <Stack key={i} direction={'row'} spacing={2} justifyContent={'center'} alignContent={'space-between'}>
+              <Box
+                key={i}
+                width="100%"
+                minHeight="150px"
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                bgcolor={"#f0f0f0"}
+              >
+                <Typography variant={"h3"} color={"#333"} textAlign={"center"}>
+                  {
+                    // capitalize first letter of the item
+                    i.charAt(0).toUpperCase() + i.slice(1)
+                  }
+                </Typography>
+              </Box>
+              <Button variant="contained" onClick={() =>removeItem(i)}
+              >
+              Remove</Button>
+            </Stack>
           ))}
         </Stack>
       </Box>
