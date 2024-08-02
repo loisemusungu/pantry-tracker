@@ -29,8 +29,7 @@ export default function Home() {
 
   const [itemName, setItemName] = useState('')
 
-  useEffect(() => {
-    const updatePantryTracker = async () => {
+  const updatePantryTracker = async () => {
       const snapshot = query(collection(firestore, "pantryTracker"))
       const docs = await getDocs(snapshot)
       const pantryTrackerList = []
@@ -40,11 +39,15 @@ export default function Home() {
       console.log(pantryTrackerList)
       setPantryTracker(pantryTrackerList)
     }
+
+  useEffect(() => {
+    
     updatePantryTracker()
   }, [])
 
-  const addItem = (item) => {
-    console.log(item)
+  const addItem = async (item) => {
+    await firestore.collection('pantryTracker').doc(item).set({})
+    updatePantryTracker()
   }
 
   return (
@@ -80,6 +83,7 @@ export default function Home() {
             variant="outlined"
             onClick={() => {
               addItem(itemName)
+              setItemName('')
               handleClose()
             }}
             >
